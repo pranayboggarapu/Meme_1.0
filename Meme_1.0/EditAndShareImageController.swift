@@ -164,8 +164,7 @@ class EditAndShareImageController: UIViewController, UIImagePickerControllerDele
     }
     //MARK:- Un-Subscribe to keyboard notifications
     func unSubscribeToKeyboardNotifications() {
-        NotificationCenter.default.removeObserver(self, name: .UIKeyboardWillShow, object: nil)
-        NotificationCenter.default.removeObserver(self, name: .UIKeyboardWillHide, object: nil)
+        NotificationCenter.default.removeObserver(self)
     }
     
     //MARK:- Function to execute when Camera icon is pressed
@@ -175,7 +174,7 @@ class EditAndShareImageController: UIViewController, UIImagePickerControllerDele
         showPickerController(.camera)
         
         //MARK: Capture users permission
-        captureAuthorizationStatus_Camera()
+        captureAuthorizationStatusCamera()
         
     }
     
@@ -188,7 +187,7 @@ class EditAndShareImageController: UIViewController, UIImagePickerControllerDele
     }
     
     //MARK:- Capture authorization status for camera
-    func captureAuthorizationStatus_Camera() {
+    func captureAuthorizationStatusCamera() {
         //MARK: Capture the authorization status
         cameraAccessDescription = AVCaptureDevice.authorizationStatus(for: AVMediaType.video)
         
@@ -205,7 +204,7 @@ class EditAndShareImageController: UIViewController, UIImagePickerControllerDele
     }
     
     //MARK:- Capture authorization status for gallery
-    func captureAuthorizationStatus_Gallery() {
+    func captureAuthorizationStatusGallery() {
         //MARK: Capture the authorization status
         galleryAccessDescription = PHPhotoLibrary.authorizationStatus()
         
@@ -226,7 +225,7 @@ class EditAndShareImageController: UIViewController, UIImagePickerControllerDele
         //MARK: Present the UIImagePicker
         showPickerController(.photoLibrary)
         //MARK: Capture user's permission
-        captureAuthorizationStatus_Gallery()
+        captureAuthorizationStatusGallery()
     }
     
     //MARK:- Gallery view selecting an image
@@ -257,9 +256,6 @@ class EditAndShareImageController: UIViewController, UIImagePickerControllerDele
     
     //MARK:- Share Image
     @IBAction func shareActionMethod(_ sender: Any) {
-        
-        //MARK: Save function call
-        save()
         
         //MARK: present activity view controller
         let activityView = UIActivityViewController(activityItems: [meme.memedImage], applicationActivities: nil);
