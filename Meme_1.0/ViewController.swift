@@ -7,141 +7,102 @@
 //
 
 import UIKit
+import AVFoundation
+import Photos
+import Dispatch
 
 class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITextFieldDelegate {
 
     
+    //MARK:- Initialization and Declaration
+    
+    //MARK: Bottom Text
     @IBOutlet weak var bottomText: UITextField!
+    
+    //MARK: Top Text
     @IBOutlet weak var topText: UITextField!
+    
+    //MARK:Top Nav Bar
     @IBOutlet weak var topNav: UINavigationBar!
+    
+    //MARK: Bottom Tool Bar
     @IBOutlet weak var navBar: UIToolbar!
+    
+    //MARK:Camera Icon
     @IBOutlet weak var cameraIcon: UIBarButtonItem!
+    
+    //MARK:Image viewer
     @IBOutlet weak var uiImageViewer: UIImageView!
+    
+    //MARK: Gallery button
     @IBOutlet weak var galleryButton: UIBarButtonItem!
     
+    //MARK: Cancel Image Editing
     @IBOutlet weak var cancelImageEditing: UIBarButtonItem!
+    
+    //MARK: Share Image Button
     @IBOutlet weak var shareImage: UIBarButtonItem!
     
+    
+    //MARK: Variable to save which textfield is being edited
     var textFieldBeingEdited: String = "topText"
     
+    //MARK: Meme variable
     var meme: Meme!
     
+    //MARK: Variables for Camera and gallery access description
+    var cameraAccessDescription:AVAuthorizationStatus = AVAuthorizationStatus.notDetermined
+    var galleryAccessDescription:PHAuthorizationStatus = PHAuthorizationStatus.notDetermined
+    
+    //MARK:- View Did Load function
     override func viewDidLoad() {
+        
         super.viewDidLoad()
+        //MARK:To enable camera only when it is available
         cameraIcon.isEnabled = UIImagePickerController.isSourceTypeAvailable(.camera)
+        //MARK:Initialize the text fields
         initializeTextFields(topText, "TOP")
         initializeTextFields(bottomText, "BOTTOM")
+        
+        //MARK:Center alignment for text fields
+        topText.textAlignment = .center
+        bottomText.textAlignment = .center
+        //MARK:Disable the share icon untill editing is complete
         shareImage.isEnabled = false
-        print("-------------------")
-        print("view did load function called")
-        print("-------------------")
         
     }
-    
-    func textFieldShouldBeginEditing(_ textField: UITextField) -> Bool {
-        textField.placeholder = ""
-        if textField == topText {
-            textFieldBeingEdited = "topText"
-            
-        } else {
-            textFieldBeingEdited = "bottomText"
-        }
-        return true
-    }
-
+    //MARK:- View will appear function
     override func viewWillAppear(_ animated: Bool) {
+        
         super.viewDidAppear(animated)
-        print("-------------------")
-        print("view will appear function called")
-        print("-------------------")
+        
+        //MARK: Disable share and cancel buttons
+        if uiImageViewer.image == nil {
+            shareImage.isEnabled = false
+            cancelImageEditing.isEnabled = false
+        }
+        
+        //MARK: Subscribe to keyboard notifications
         subscribeToKeyboardNotifications()
     }
     
+    //MARK:- View will Disappear function
     override func viewWillDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
-        print("-------------------")
-        print("view will disappear function called")
-        print("-------------------")
+        //MARK: Unsubscribe from keyboard notifications
         unSubscribeToKeyboardNotifications()
     }
-    
-    @objc func keyboardWillShow(_ notification:Notification) {
-        
-        if textFieldBeingEdited == "bottomText" {
-            view.frame.origin.y -= getKeyboardHeight(notification)
-        }
-    }
-    
-    @objc func keyboardWillHide(_ notification:Notification) {
-        view.frame.origin.y = 0
-    }
-    
-    func getKeyboardHeight(_ notification:Notification) -> CGFloat {
-        let userInfo = notification.userInfo
-        let keyboardSize = userInfo![UIKeyboardFrameEndUserInfoKey] as! NSValue // of CGRect
-        return keyboardSize.cgRectValue.height
-    }
-    
-    func subscribeToKeyboardNotifications() {
-        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow(_:)), name: .UIKeyboardWillShow, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide(_:)), name: .UIKeyboardWillHide, object: nil)
-    }
-    
-    func unSubscribeToKeyboardNotifications() {
-        NotificationCenter.default.removeObserver(self, name: .UIKeyboardWillShow, object: nil)
-        NotificationCenter.default.removeObserver(self, name: .UIKeyboardWillHide, object: nil)
-    }
-    
-    @IBAction func cameraPress(_ sender: Any) {
-        let uiImageViewer = UIImagePickerController()
-        uiImageViewer.delegate = self
-        uiImageViewer.sourceType = .camera
-        present(uiImageViewer, animated: true, completion: nil)
-    }
-    
-    @IBAction func galleryPress(_ sender: Any) {
-        let uiImageViewer = UIImagePickerController()
-        uiImageViewer.delegate = self
-        present(uiImageViewer, animated: true, completion: nil)
-        
-    }
-    
-    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
-        print("Image picker controller called")
-        
-        if let image = info[UIImagePickerControllerOriginalImage] as? UIImage  {
-            uiImageViewer.image = image
-            shareImage.isEnabled = true
-            uiImageViewer.contentMode = .scaleAspectFill
-            
-        }
-        
-        dismiss(animated: true, completion: nil)
-    }
-    
-    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
-        print("Image picker controller cancel button called")
-        uiImageViewer.image = nil
-        
-        dismiss(animated: true, completion: nil)
-    }
-    
-    override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
-        print("-------------------")
-        print("My function called")
-        print("-------------------")
-    }
-    
-    
-    
+    //MARK:- Initialize text fields function
     func initializeTextFields(_ textField: UITextField, _ placeHolderText: String) {
+        
+        //MARK: Insert place holder text
         textField.placeholder = placeHolderText
-        textField.textAlignment = .center
-        textField.contentHorizontalAlignment = .center
-        textField.contentVerticalAlignment = .center
+        
+        //MARK: Border style and borderwidth
         textField.borderStyle = .none
         textField.layer.borderWidth = 0
         
+        //MARK: Font color and attributes
         let memeTextAttributes:[String: Any] = [
             NSAttributedStringKey.strokeColor.rawValue: UIColor.white/* TODO: fill in appropriate UIColor */,
             NSAttributedStringKey.foregroundColor.rawValue: UIColor.white/* TODO: fill in appropriate UIColor */,
@@ -154,80 +115,210 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
         textField.attributedPlaceholder = NSAttributedString(string: placeHolderText,
                                                              attributes: [NSAttributedStringKey.foregroundColor: UIColor.white])
         
-        
+        //MARK: assign the delegate to self
         textField.delegate = self
     }
+
+    //MARK:- Text field should begin editing function
+    func textFieldShouldBeginEditing(_ textField: UITextField) -> Bool {
+        //MARK: empty the placeholder
+        textField.placeholder = ""
+        //MARK: assign the text field being edited to the variable
+        if textField == topText {
+            textFieldBeingEdited = "topText"
+            
+        } else {
+            textFieldBeingEdited = "bottomText"
+        }
+        return true
+    }
     
+    //MARK:- Text field did begin editing function
     func textFieldDidBeginEditing(_ textField: UITextField) {
-        print("Text field Did begin editing called")
+        //MARK: empty the placeholder
         textField.placeholder = ""
     }
     
+    //MARK:- Text field should return function - function implemented after return button is pressed
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        print("Text field should return called")
+        
         textField.resignFirstResponder()
         return true
     }
     
+    //MARK:- Function to change the keyboard height change in order to show bottom text
+    @objc func keyboardWillShow(_ notification:Notification) {
+        
+        if textFieldBeingEdited == "bottomText" {
+            view.frame.origin.y -= getKeyboardHeight(notification)
+        }
+    }
+    //MARK:- Function to change the keyboard height to zero in order to show everything AS-IS
+    @objc func keyboardWillHide(_ notification:Notification) {
+        if textFieldBeingEdited == "bottomText" {
+            view.frame.origin.y = 0
+        }
+    }
+    //MARK:- Function to get keyboard height
+    func getKeyboardHeight(_ notification:Notification) -> CGFloat {
+        let userInfo = notification.userInfo
+        let keyboardSize = userInfo![UIKeyboardFrameEndUserInfoKey] as! NSValue // of CGRect
+        return keyboardSize.cgRectValue.height
+    }
+    
+    //MARK:- Subscribe to keyboard notifications
+    func subscribeToKeyboardNotifications() {
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow(_:)), name: .UIKeyboardWillShow, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide(_:)), name: .UIKeyboardWillHide, object: nil)
+    }
+    //MARK:- Un-Subscribe to keyboard notifications
+    func unSubscribeToKeyboardNotifications() {
+        NotificationCenter.default.removeObserver(self, name: .UIKeyboardWillShow, object: nil)
+        NotificationCenter.default.removeObserver(self, name: .UIKeyboardWillHide, object: nil)
+    }
+    
+    //MARK:- Function to execute when Camera icon is pressed
+    @IBAction func cameraPress(_ sender: Any) {
+        
+        //MARK: Present the UIImagePicker
+        let uiImageViewer = UIImagePickerController()
+        uiImageViewer.delegate = self
+        uiImageViewer.sourceType = .camera
+        present(uiImageViewer, animated: true, completion: nil)
+        
+        //MARK: Capture the authorization status
+        cameraAccessDescription = AVCaptureDevice.authorizationStatus(for: AVMediaType.video)
+        
+        //MARK: If authorization status is missing
+        if(cameraAccessDescription != .authorized) {
+            AVCaptureDevice.requestAccess(for: AVMediaType.video, completionHandler: { granted in
+                if granted {
+                    self.cameraAccessDescription = .authorized
+                } else {
+                    self.dismiss(animated: true, completion: nil)
+                }
+            })
+        }
+        
+    }
+    
+    //MARK:- Function to execute when Gallery icon is pressed
+    @IBAction func galleryPress(_ sender: Any) {
+        //MARK: Present the UIImagePicker
+        let uiImageViewer = UIImagePickerController()
+        uiImageViewer.delegate = self
+        present(uiImageViewer, animated: true, completion: nil)
+        
+        //MARK: Capture the authorization status
+        galleryAccessDescription = PHPhotoLibrary.authorizationStatus()
+        
+        //MARK: If authorization status is missing
+        if galleryAccessDescription != .authorized {
+            PHPhotoLibrary.requestAuthorization({status in
+                if status == .authorized{
+                    self.galleryAccessDescription = .authorized
+                } else {
+                    self.dismiss(animated: true, completion: nil)
+                }
+            })
+        }
+        
+
+        
+    }
+    
+    //MARK:- Gallery view selecting an image
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
+        
+        if let image = info[UIImagePickerControllerOriginalImage] as? UIImage  {
+            uiImageViewer.image = image
+            shareImage.isEnabled = true
+            cancelImageEditing.isEnabled = true
+        }
+        dismiss(animated: true, completion: nil)
+    }
+    
+    //MARK:- Gallery view cancel button press function
+    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+        uiImageViewer.image = nil
+        shareImage.isEnabled = false
+        cancelImageEditing.isEnabled = false
+        dismiss(animated: true, completion: nil)
+    }
+   
+    //MARK:- Save the function
     func save() {
         // Create the meme
-        
          meme = Meme(topText: topText.text!, bottomText: bottomText.text!, originalImage: uiImageViewer.image!, memedImage: generateMemedImage())
         
     }
     
+    //MARK:- Share Image
     @IBAction func shareActionMethod(_ sender: Any) {
         
+        //MARK: Save function call
         save()
         
+        //MARK: present activity view controller
         let activityView = UIActivityViewController(activityItems: [meme.memedImage], applicationActivities: nil);
         present(activityView, animated: true, completion: nil)
         activityView.completionWithItemsHandler = {
             (activity, success, items, error) in
             if(success && error == nil){
-                //Do Work
+                
                 self.dismiss(animated: true, completion: nil);
             }
             else if (error != nil){
-                //log the error
             }
         };
         
     }
     
-    
-    
-    
+    //MARK:- Generate Meme Image
     func generateMemedImage() -> UIImage {
         
-        // TODO: Hide toolbar and navbar
+        // MARK: Hide toolbar and navbar
         navBar.isHidden = true
         topNav.isHidden = true
         
-        // Render view to an image
+        //MARK: Render view to an image
         UIGraphicsBeginImageContext(self.view.frame.size)
         view.drawHierarchy(in: self.view.frame, afterScreenUpdates: true)
         let memedImage:UIImage = UIGraphicsGetImageFromCurrentImageContext()!
         UIGraphicsEndImageContext()
         
-        // TODO: Show toolbar and navbar
+        // MARK: Show toolbar and navbar
         navBar.isHidden = false
         topNav.isHidden = false
         
         return memedImage
     }
     
+    //MARK:- Cancel sharing
     @IBAction func cancelSharing(_ sender: Any) {
+        //MARK:- Empty text fields
         topText.text = ""
         bottomText.text = ""
+        //MARK: Initialize text fields
         initializeTextFields(topText, "TOP")
         initializeTextFields(bottomText, "BOTTOM")
-        if uiImageViewer.image != nil {
-            cancelImageEditing.isEnabled = true
-        }else {
-            cancelImageEditing.isEnabled = false
+        //MARK: Text alignment
+        topText.textAlignment = .center
+        bottomText.textAlignment = .center
+        
+        
+    }
+    
+    //MARK:- changing view mode
+    override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
+        if UIDevice.current.orientation.isPortrait {
+            uiImageViewer.contentMode = .scaleAspectFill
+        } else if UIDevice.current.orientation.isLandscape {
+            uiImageViewer.contentMode = .scaleToFill
         }
     }
+    
+    //MARK: Meme struct
     struct Meme {
         var topText: String
         var bottomText: String
