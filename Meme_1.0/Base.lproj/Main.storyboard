@@ -10,14 +10,17 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--View Controller-->
+        <!--Edit And Share Image Controller-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController id="BYZ-38-t0r" customClass="ViewController" customModule="Meme_1_0" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="BYZ-38-t0r" customClass="EditAndShareImageController" customModule="Meme_1_0" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
                         <rect key="frame" x="0.0" y="0.0" width="568" height="320"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="fQV-Fv-dBT">
+                                <rect key="frame" x="0.0" y="32" width="568" height="248"/>
+                            </imageView>
                             <navigationBar contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="2Xk-3C-fwp">
                                 <rect key="frame" x="0.0" y="0.0" width="568" height="32"/>
                                 <items>
@@ -75,9 +78,6 @@
                                     <barButtonItem style="plain" systemItem="flexibleSpace" id="hYX-da-GTL"/>
                                 </items>
                             </toolbar>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="fQV-Fv-dBT">
-                                <rect key="frame" x="0.0" y="32" width="568" height="248"/>
-                            </imageView>
                         </subviews>
                         <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
@@ -101,7 +101,7 @@
                                 <variation key="heightClass=regular-widthClass=regular" constant="30"/>
                             </constraint>
                             <constraint firstItem="bx8-AS-tGU" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="M0L-sR-yKt"/>
-                            <constraint firstItem="2Xk-3C-fwp" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" id="csq-vq-Nh5"/>
+                            <constraint firstItem="2Xk-3C-fwp" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="csq-vq-Nh5"/>
                             <constraint firstItem="l5x-b2-gMJ" firstAttribute="top" secondItem="bx8-AS-tGU" secondAttribute="bottom" constant="30" id="gqT-cN-vf4"/>
                             <constraint firstItem="fQV-Fv-dBT" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" id="hXi-Ve-lKM"/>
                             <constraint firstItem="fQV-Fv-dBT" firstAttribute="top" secondItem="2Xk-3C-fwp" secondAttribute="bottom" constant="139" identifier="imageViewerTopConstraint" id="i2Q-dW-6hI">

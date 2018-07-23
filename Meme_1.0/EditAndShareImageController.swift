@@ -11,7 +11,7 @@ import AVFoundation
 import Photos
 import Dispatch
 
-class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITextFieldDelegate {
+class EditAndShareImageController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITextFieldDelegate {
 
     
     //MARK:- Initialization and Declaration
@@ -44,8 +44,6 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
     @IBOutlet weak var shareImage: UIBarButtonItem!
     
     
-    //MARK: Variable to save which textfield is being edited
-    var textFieldBeingEdited: String = "topText"
     
     //MARK: Meme variable
     var meme: Meme!
@@ -104,11 +102,11 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
         
         //MARK: Font color and attributes
         let memeTextAttributes:[String: Any] = [
-            NSAttributedStringKey.strokeColor.rawValue: UIColor.white/* TODO: fill in appropriate UIColor */,
+            NSAttributedStringKey.strokeColor.rawValue: UIColor.black/* TODO: fill in appropriate UIColor */,
             NSAttributedStringKey.foregroundColor.rawValue: UIColor.white/* TODO: fill in appropriate UIColor */,
             
             NSAttributedStringKey.font.rawValue: UIFont(name: "HelveticaNeue-CondensedBlack", size: 40)!,
-            NSAttributedStringKey.strokeWidth.rawValue: 5.0/* TODO: fill in appropriate Float */]
+            NSAttributedStringKey.strokeWidth.rawValue: -5.0/* TODO: fill in appropriate Float */]
         
         textField.defaultTextAttributes = memeTextAttributes
         
@@ -123,13 +121,7 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
     func textFieldShouldBeginEditing(_ textField: UITextField) -> Bool {
         //MARK: empty the placeholder
         textField.placeholder = ""
-        //MARK: assign the text field being edited to the variable
-        if textField == topText {
-            textFieldBeingEdited = "topText"
-            
-        } else {
-            textFieldBeingEdited = "bottomText"
-        }
+        
         return true
     }
     
@@ -149,13 +141,13 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
     //MARK:- Function to change the keyboard height change in order to show bottom text
     @objc func keyboardWillShow(_ notification:Notification) {
         
-        if textFieldBeingEdited == "bottomText" {
+        if bottomText.isEditing {
             view.frame.origin.y -= getKeyboardHeight(notification)
         }
     }
     //MARK:- Function to change the keyboard height to zero in order to show everything AS-IS
     @objc func keyboardWillHide(_ notification:Notification) {
-        if textFieldBeingEdited == "bottomText" {
+        if bottomText.isEditing {
             view.frame.origin.y = 0
         }
     }
@@ -181,11 +173,23 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
     @IBAction func cameraPress(_ sender: Any) {
         
         //MARK: Present the UIImagePicker
+        showPickerController(.camera)
+        
+        //MARK: Capture users permission
+        captureAuthorizationStatus_Camera()
+        
+    }
+    
+    //MARK:- Function to show UIImagePickerController
+    func showPickerController(_ pickerType: UIImagePickerControllerSourceType) {
         let uiImageViewer = UIImagePickerController()
         uiImageViewer.delegate = self
-        uiImageViewer.sourceType = .camera
+        uiImageViewer.sourceType = pickerType
         present(uiImageViewer, animated: true, completion: nil)
-        
+    }
+    
+    //MARK:- Capture authorization status for camera
+    func captureAuthorizationStatus_Camera() {
         //MARK: Capture the authorization status
         cameraAccessDescription = AVCaptureDevice.authorizationStatus(for: AVMediaType.video)
         
@@ -199,16 +203,10 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
                 }
             })
         }
-        
     }
     
-    //MARK:- Function to execute when Gallery icon is pressed
-    @IBAction func galleryPress(_ sender: Any) {
-        //MARK: Present the UIImagePicker
-        let uiImageViewer = UIImagePickerController()
-        uiImageViewer.delegate = self
-        present(uiImageViewer, animated: true, completion: nil)
-        
+    //MARK:- Capture authorization status for gallery
+    func captureAuthorizationStatus_Gallery() {
         //MARK: Capture the authorization status
         galleryAccessDescription = PHPhotoLibrary.authorizationStatus()
         
@@ -222,9 +220,14 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
                 }
             })
         }
-        
-
-        
+    }
+    
+    //MARK:- Function to execute when Gallery icon is pressed
+    @IBAction func galleryPress(_ sender: Any) {
+        //MARK: Present the UIImagePicker
+        showPickerController(.photoLibrary)
+        //MARK: Capture user's permission
+        captureAuthorizationStatus_Gallery()
     }
     
     //MARK:- Gallery view selecting an image
@@ -265,7 +268,7 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
         activityView.completionWithItemsHandler = {
             (activity, success, items, error) in
             if(success && error == nil){
-                
+                self.save()
                 self.dismiss(animated: true, completion: nil);
             }
             else if (error != nil){
@@ -312,9 +315,9 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
     //MARK:- changing view mode
     override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
         if UIDevice.current.orientation.isPortrait {
-            uiImageViewer.contentMode = .scaleAspectFill
+            uiImageViewer.contentMode = .scaleAspectFit
         } else if UIDevice.current.orientation.isLandscape {
-            uiImageViewer.contentMode = .scaleToFill
+            uiImageViewer.contentMode = .scaleAspectFit
         }
     }
     
