@@ -1,7 +1,7 @@
 //
-//  ViewController.swift
+//  EditAndShareImageController.swift
 //  Meme_1.0
-//
+//  impact.ttf - file downloaded from https://github.com/caarlos0-graveyard/msfonts/blob/master/fonts/impact.ttf
 //  Created by Sai Venkata Pranay Boggarapu on 7/12/18.
 //  Copyright © 2018 Sai Venkata Pranay Boggarapu. All rights reserved.
 //
@@ -62,9 +62,7 @@ class EditAndShareImageController: UIViewController, UIImagePickerControllerDele
         initializeTextFields(topText, "TOP")
         initializeTextFields(bottomText, "BOTTOM")
         
-        //MARK:Center alignment for text fields
-        topText.textAlignment = .center
-        bottomText.textAlignment = .center
+        
         //MARK:Disable the share icon untill editing is complete
         shareImage.isEnabled = false
         
@@ -115,6 +113,7 @@ class EditAndShareImageController: UIViewController, UIImagePickerControllerDele
         
         //MARK: assign the delegate to self
         textField.delegate = self
+        textField.textAlignment = .center
     }
 
     //MARK:- Text field should begin editing function
@@ -142,7 +141,7 @@ class EditAndShareImageController: UIViewController, UIImagePickerControllerDele
     @objc func keyboardWillShow(_ notification:Notification) {
         
         if bottomText.isEditing {
-            view.frame.origin.y -= getKeyboardHeight(notification)
+            view.frame.origin.y = -getKeyboardHeight(notification)
         }
     }
     //MARK:- Function to change the keyboard height to zero in order to show everything AS-IS
@@ -305,10 +304,6 @@ class EditAndShareImageController: UIViewController, UIImagePickerControllerDele
         //MARK: Initialize text fields
         initializeTextFields(topText, "TOP")
         initializeTextFields(bottomText, "BOTTOM")
-        //MARK: Text alignment
-        topText.textAlignment = .center
-        bottomText.textAlignment = .center
-        
         
     }
     
@@ -320,14 +315,5 @@ class EditAndShareImageController: UIViewController, UIImagePickerControllerDele
             uiImageViewer.contentMode = .scaleAspectFit
         }
     }
-    
-    //MARK: Meme struct
-    struct Meme {
-        var topText: String
-        var bottomText: String
-        var originalImage: UIImage
-        var memedImage: UIImage
-    }
-    
 }
 
