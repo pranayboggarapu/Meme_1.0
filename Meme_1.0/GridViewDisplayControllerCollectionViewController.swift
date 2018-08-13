@@ -50,8 +50,8 @@ class GridViewDisplayControllerCollectionViewController: UICollectionViewControl
     //MARK: Set constraints method
     func setConstraints() {
         
-        let space:CGFloat = 2.0
-        let dimension = (view.frame.size.width - (2 * space)) / 5.0
+        let space: CGFloat = 3.0
+        let dimension = (view.frame.size.width - (2 * space)) / space
         
         collectionFlowLayout.minimumInteritemSpacing = space
         collectionFlowLayout.minimumLineSpacing = space
@@ -85,6 +85,12 @@ class GridViewDisplayControllerCollectionViewController: UICollectionViewControl
         return cell
     }
 
+    override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let detailViewController = self.storyboard?.instantiateViewController(withIdentifier: "memeDetailViewId") as! MemeDetailViewController
+        detailViewController.meme = self.preloadedMemes?[indexPath.row]
+        navigationController?.pushViewController(detailViewController, animated: true)
+    }
+    
     
 
 }

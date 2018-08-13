@@ -56,8 +56,7 @@ class EditAndShareImageController: UIViewController, UIImagePickerControllerDele
     override func viewDidLoad() {
         
         super.viewDidLoad()
-        //MARK:To enable camera only when it is available
-        cameraIcon.isEnabled = UIImagePickerController.isSourceTypeAvailable(.camera)
+        
         //MARK:Initialize the text fields
         initializeTextFields(topText, "TOP")
         initializeTextFields(bottomText, "BOTTOM")
@@ -75,10 +74,13 @@ class EditAndShareImageController: UIViewController, UIImagePickerControllerDele
         
         super.viewDidAppear(animated)
         
+        //MARK:To enable camera only when it is available
+        cameraIcon.isEnabled = UIImagePickerController.isSourceTypeAvailable(.camera)
+        
         //MARK: Disable share and cancel buttons
         if uiImageViewer.image == nil {
             shareImage.isEnabled = false
-            cancelImageEditing.isEnabled = false
+            //cancelImageEditing.isEnabled = false
         }
         
         //MARK: Subscribe to keyboard notifications
@@ -237,7 +239,7 @@ class EditAndShareImageController: UIViewController, UIImagePickerControllerDele
         if let image = info[UIImagePickerControllerOriginalImage] as? UIImage  {
             uiImageViewer.image = image
             shareImage.isEnabled = true
-            cancelImageEditing.isEnabled = true
+            //cancelImageEditing.isEnabled = true
         }
         dismiss(animated: true, completion: nil)
     }
@@ -246,7 +248,7 @@ class EditAndShareImageController: UIViewController, UIImagePickerControllerDele
     func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
         uiImageViewer.image = nil
         shareImage.isEnabled = false
-        cancelImageEditing.isEnabled = false
+        //cancelImageEditing.isEnabled = false
         dismiss(animated: true, completion: nil)
     }
    
@@ -285,8 +287,9 @@ class EditAndShareImageController: UIViewController, UIImagePickerControllerDele
     func generateMemedImage() -> UIImage {
         
         // MARK: Hide toolbar and navbar
-        navBar.isHidden = true
-        topNav.isHidden = true
+        hideOrUnHideNavBar(hideValue: true)
+        hideOrUnHideTopNav(hideValue: true)
+        
         
         //MARK: Render view to an image
         UIGraphicsBeginImageContext(self.view.frame.size)
@@ -295,20 +298,23 @@ class EditAndShareImageController: UIViewController, UIImagePickerControllerDele
         UIGraphicsEndImageContext()
         
         // MARK: Show toolbar and navbar
-        navBar.isHidden = false
-        topNav.isHidden = false
+        hideOrUnHideNavBar(hideValue: false)
+        hideOrUnHideTopNav(hideValue: false)
         
         return memedImage
     }
     
+    func hideOrUnHideNavBar(hideValue: Bool){
+        navBar.isHidden = hideValue
+    }
+    
+    func hideOrUnHideTopNav(hideValue: Bool) {
+        topNav.isHidden = hideValue
+    }
+    
     //MARK:- Cancel sharing
     @IBAction func cancelSharing(_ sender: Any) {
-        //MARK:- Empty text fields
-        topText.text = ""
-        bottomText.text = ""
-        //MARK: Initialize text fields
-        initializeTextFields(topText, "TOP")
-        initializeTextFields(bottomText, "BOTTOM")
+         navigationController?.popToRootViewController(animated: true)
         
     }
     

@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Bucket
+   type = "1"
+   version = "2.0">
+   <Breakpoints>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Meme_1.0/MemeDetailViewController.swift"
+            timestampString = "555840917.4765019"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "13"
+            endingLineNumber = "13"
+            landmarkName = "MemeDetailViewController"
+            landmarkType = "3">
+            <Locations>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "Meme_1_0.MemeDetailViewController.meme.getter : Swift.Optional&lt;Meme_1_0.Meme&gt;"
+                  moduleName = "Meme_1.0"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/m710648/Documents/Personal/Udacity_Repos/Meme_1.0/Meme_1.0/Meme_1.0/MemeDetailViewController.swift"
+                  timestampString = "555838571.982815"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "13"
+                  endingLineNumber = "13"
+                  offsetFromSymbolStart = "237">
+               </Location>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "Meme_1_0.MemeDetailViewController.meme.setter : Swift.Optional&lt;Meme_1_0.Meme&gt;"
+                  moduleName = "Meme_1.0"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/m710648/Documents/Personal/Udacity_Repos/Meme_1.0/Meme_1.0/Meme_1.0/MemeDetailViewController.swift"
+                  timestampString = "555838571.985033"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "13"
+                  endingLineNumber = "13"
+                  offsetFromSymbolStart = "317">
+               </Location>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "Meme_1_0.MemeDetailViewController.init(nibName: Swift.Optional&lt;Swift.String&gt;, bundle: Swift.Optional&lt;__ObjC.Bundle&gt;) -&gt; Meme_1_0.MemeDetailViewController"
+                  moduleName = "Meme_1.0"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/m710648/Documents/Personal/Udacity_Repos/Meme_1.0/Meme_1.0/Meme_1.0/MemeDetailViewController.swift"
+                  timestampString = "555838571.987415"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "13"
+                  endingLineNumber = "13"
+                  offsetFromSymbolStart = "224">
+               </Location>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "Meme_1_0.MemeDetailViewController.init(coder: __ObjC.NSCoder) -&gt; Swift.Optional&lt;Meme_1_0.MemeDetailViewController&gt;"
+                  moduleName = "Meme_1.0"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/m710648/Documents/Personal/Udacity_Repos/Meme_1.0/Meme_1.0/Meme_1.0/MemeDetailViewController.swift"
+                  timestampString = "555838571.990724"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "13"
+                  endingLineNumber = "13"
+                  offsetFromSymbolStart = "155">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+   </Breakpoints>
+</Bucket>

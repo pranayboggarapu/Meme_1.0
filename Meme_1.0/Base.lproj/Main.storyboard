@@ -101,7 +101,9 @@
                             <outlet property="delegate" destination="f9f-CM-Kit" id="qZY-34-7be"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="Sent Memes" id="qGm-j2-5ya"/>
+                    <navigationItem key="navigationItem" title="Sent Memes" id="qGm-j2-5ya">
+                        <barButtonItem key="backBarButtonItem" title="Back" id="G6t-a4-lyI"/>
+                    </navigationItem>
                     <connections>
                         <segue destination="BYZ-38-t0r" kind="show" identifier="goToMakeMeme" id="vUe-VG-aSk"/>
                     </connections>
@@ -172,7 +174,9 @@
                             <outlet property="delegate" destination="LAW-i1-jPL" id="6Ii-L0-GvL"/>
                         </connections>
                     </collectionView>
-                    <navigationItem key="navigationItem" title="Sent Memes" id="hN0-Oy-5Sa"/>
+                    <navigationItem key="navigationItem" title="Sent Memes" id="hN0-Oy-5Sa">
+                        <barButtonItem key="backBarButtonItem" title="Back" id="hZw-yw-822"/>
+                    </navigationItem>
                     <connections>
                         <outlet property="collectionFlowLayout" destination="ybX-Ei-Y1n" id="a75-IB-arF"/>
                         <segue destination="BYZ-38-t0r" kind="show" identifier="goToMakeMeme_ViaGrid" id="22g-Rp-TmT"/>
@@ -318,7 +322,36 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="203" y="-79"/>
+            <point key="canvasLocation" x="810" y="-193"/>
+        </scene>
+        <!--Meme Detail View-->
+        <scene sceneID="eiQ-0a-0id">
+            <objects>
+                <viewController storyboardIdentifier="memeDetailViewId" title="Meme Detail View" id="PAl-gO-bDk" customClass="MemeDetailViewController" customModule="Meme_1_0" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="AAX-Di-Wpa">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="zEW-nx-2ic">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                            </imageView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="zEW-nx-2ic" firstAttribute="top" secondItem="AAX-Di-Wpa" secondAttribute="top" id="iea-XS-Ukl"/>
+                            <constraint firstItem="2nj-RT-Ywv" firstAttribute="trailing" secondItem="zEW-nx-2ic" secondAttribute="trailing" id="oww-WD-bkn"/>
+                            <constraint firstItem="zEW-nx-2ic" firstAttribute="leading" secondItem="AAX-Di-Wpa" secondAttribute="leading" id="u2G-ER-0Zx"/>
+                            <constraint firstItem="2nj-RT-Ywv" firstAttribute="bottom" secondItem="zEW-nx-2ic" secondAttribute="bottom" id="xEx-OG-w8m"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="2nj-RT-Ywv"/>
+                    </view>
+                    <connections>
+                        <outlet property="imageView" destination="zEW-nx-2ic" id="kX2-dg-y0w"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="rMa-Nc-GDu" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="498" y="550"/>
         </scene>
     </scenes>
     <resources>

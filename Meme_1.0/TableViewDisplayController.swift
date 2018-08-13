@@ -21,6 +21,7 @@ class TableViewDisplayController: UITableViewController {
         
         //initializing the memes
         self.preloadedMemes = appDelegate.memes
+        //self.navigationController?.navigationBar.topItem?.title = "Sent Memes"
         
         //Adding the Add(+) button
         let button: UIButton = UIButton(type: UIButtonType.contactAdd)
@@ -36,6 +37,7 @@ class TableViewDisplayController: UITableViewController {
     }
     
     override func viewWillAppear(_ animated: Bool) {
+        //self.navigationController?.navigationBar.topItem?.title = "Sent Memes"
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
         self.preloadedMemes = appDelegate.memes
         self.navigationController?.isNavigationBarHidden = false
@@ -61,6 +63,9 @@ class TableViewDisplayController: UITableViewController {
         return (preloadedMemes?.count)!
     }
 
+    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 120
+    }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let meme = preloadedMemes![indexPath.row]
@@ -77,5 +82,11 @@ class TableViewDisplayController: UITableViewController {
             viewWillAppear(true)
             
         }
+    }
+    
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let detailViewController = self.storyboard?.instantiateViewController(withIdentifier: "memeDetailViewId") as! MemeDetailViewController
+        detailViewController.meme = self.preloadedMemes?[indexPath.row]
+        navigationController?.pushViewController(detailViewController, animated: true)
     }
 }

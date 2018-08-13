@@ -13,6 +13,7 @@
 		24FD71A921211D0A0087D4BA /* MemeTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24FD71A821211D0A0087D4BA /* MemeTableViewCell.swift */; };
 		24FD71AD212139130087D4BA /* GridViewDisplayControllerCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24FD71AC212139130087D4BA /* GridViewDisplayControllerCollectionViewController.swift */; };
 		24FD71AF21213C650087D4BA /* MemeGridViewCellModalCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24FD71AE21213C650087D4BA /* MemeGridViewCellModalCollectionViewCell.swift */; };
+		24FD71B1212166470087D4BA /* MemeDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24FD71B0212166470087D4BA /* MemeDetailViewController.swift */; };
 		FEC42FEA20F85A30000A73AF /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEC42FE920F85A30000A73AF /* AppDelegate.swift */; };
 		FEC42FEC20F85A30000A73AF /* EditAndShareImageController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEC42FEB20F85A30000A73AF /* EditAndShareImageController.swift */; };
 		FEC42FEF20F85A30000A73AF /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FEC42FED20F85A30000A73AF /* Main.storyboard */; };
@@ -27,6 +28,7 @@
 		24FD71A821211D0A0087D4BA /* MemeTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemeTableViewCell.swift; sourceTree = "<group>"; };
 		24FD71AC212139130087D4BA /* GridViewDisplayControllerCollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GridViewDisplayControllerCollectionViewController.swift; sourceTree = "<group>"; };
 		24FD71AE21213C650087D4BA /* MemeGridViewCellModalCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemeGridViewCellModalCollectionViewCell.swift; sourceTree = "<group>"; };
+		24FD71B0212166470087D4BA /* MemeDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemeDetailViewController.swift; sourceTree = "<group>"; };
 		FEC42FE620F85A30000A73AF /* Meme_1.0.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Meme_1.0.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FEC42FE920F85A30000A73AF /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		FEC42FEB20F85A30000A73AF /* EditAndShareImageController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditAndShareImageController.swift; sourceTree = "<group>"; };
@@ -86,6 +88,7 @@
 				24FD71A421210C6D0087D4BA /* TableViewDisplayController.swift */,
 				24FD71AC212139130087D4BA /* GridViewDisplayControllerCollectionViewController.swift */,
 				24FD71AE21213C650087D4BA /* MemeGridViewCellModalCollectionViewCell.swift */,
+				24FD71B0212166470087D4BA /* MemeDetailViewController.swift */,
 			);
 			path = Meme_1.0;
 			sourceTree = "<group>";
@@ -170,6 +173,7 @@
 				FEC42FEC20F85A30000A73AF /* EditAndShareImageController.swift in Sources */,
 				24FD71AD212139130087D4BA /* GridViewDisplayControllerCollectionViewController.swift in Sources */,
 				FEC42FEA20F85A30000A73AF /* AppDelegate.swift in Sources */,
+				24FD71B1212166470087D4BA /* MemeDetailViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
