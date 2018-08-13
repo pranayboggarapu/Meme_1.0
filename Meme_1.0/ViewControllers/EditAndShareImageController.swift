@@ -11,7 +11,7 @@ import AVFoundation
 import Photos
 import Dispatch
 
-class EditAndShareImageController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITextFieldDelegate {
+class EditAndShareImageController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
 
     
     //MARK:- Initialization and Declaration
@@ -65,9 +65,9 @@ class EditAndShareImageController: UIViewController, UIImagePickerControllerDele
         //MARK:Disable the share icon untill editing is complete
         shareImage.isEnabled = false
         
-        self.navigationController?.isNavigationBarHidden = true
-        self.tabBarController?.tabBar.isHidden = true
-        
+        hideOrUnHideComponent(componentName: "navigationBar", hideValue: true)
+        hideOrUnHideComponent(componentName: "tabBar", hideValue: true)
+
     }
     //MARK:- View will appear function
     override func viewWillAppear(_ animated: Bool) {
@@ -119,27 +119,6 @@ class EditAndShareImageController: UIViewController, UIImagePickerControllerDele
         //MARK: assign the delegate to self
         textField.delegate = self
         textField.textAlignment = .center
-    }
-
-    //MARK:- Text field should begin editing function
-    func textFieldShouldBeginEditing(_ textField: UITextField) -> Bool {
-        //MARK: empty the placeholder
-        textField.placeholder = ""
-        
-        return true
-    }
-    
-    //MARK:- Text field did begin editing function
-    func textFieldDidBeginEditing(_ textField: UITextField) {
-        //MARK: empty the placeholder
-        textField.placeholder = ""
-    }
-    
-    //MARK:- Text field should return function - function implemented after return button is pressed
-    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        
-        textField.resignFirstResponder()
-        return true
     }
     
     //MARK:- Function to change the keyboard height change in order to show bottom text
@@ -262,22 +241,20 @@ class EditAndShareImageController: UIViewController, UIImagePickerControllerDele
         let object = UIApplication.shared.delegate
         let appDelegate = object as! AppDelegate
         appDelegate.memes.append(meme)
-        
     }
     
     //MARK:- Share Image
     @IBAction func shareActionMethod(_ sender: Any) {
         save()
         //MARK: present activity view controller
+        
         let activityView = UIActivityViewController(activityItems: [meme.memedImage], applicationActivities: nil);
         present(activityView, animated: true, completion: nil)
         activityView.completionWithItemsHandler = {
             (activity, success, items, error) in
-            if(success && error == nil){
+            if success && error == nil {
                 self.dismiss(animated: true, completion: nil);
                 self.navigationController?.popToRootViewController(animated: true)
-            }
-            else if (error != nil){
             }
         };
         
@@ -287,8 +264,8 @@ class EditAndShareImageController: UIViewController, UIImagePickerControllerDele
     func generateMemedImage() -> UIImage {
         
         // MARK: Hide toolbar and navbar
-        hideOrUnHideNavBar(hideValue: true)
-        hideOrUnHideTopNav(hideValue: true)
+        hideOrUnHideComponent(componentName: "navBar", hideValue: true)
+        hideOrUnHideComponent(componentName: "topNav", hideValue: true)
         
         
         //MARK: Render view to an image
@@ -298,18 +275,22 @@ class EditAndShareImageController: UIViewController, UIImagePickerControllerDele
         UIGraphicsEndImageContext()
         
         // MARK: Show toolbar and navbar
-        hideOrUnHideNavBar(hideValue: false)
-        hideOrUnHideTopNav(hideValue: false)
+        hideOrUnHideComponent(componentName: "navBar", hideValue: false)
+        hideOrUnHideComponent(componentName: "topNav", hideValue: false)
         
         return memedImage
     }
     
-    func hideOrUnHideNavBar(hideValue: Bool){
-        navBar.isHidden = hideValue
-    }
-    
-    func hideOrUnHideTopNav(hideValue: Bool) {
-        topNav.isHidden = hideValue
+    func hideOrUnHideComponent(componentName: String,hideValue: Bool) {
+        if componentName == "tabBar" {
+            self.tabBarController?.tabBar.isHidden = hideValue
+        } else if componentName == "navBar" {
+            navBar.isHidden = hideValue
+        } else if componentName == "navigationBar" {
+            self.navigationController?.isNavigationBarHidden = hideValue
+        } else if componentName == "topNav" {
+            topNav.isHidden = hideValue
+        }
     }
     
     //MARK:- Cancel sharing

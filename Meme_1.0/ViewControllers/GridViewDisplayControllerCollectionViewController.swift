@@ -9,11 +9,13 @@
 import UIKit
 
 
-class GridViewDisplayControllerCollectionViewController: UICollectionViewController {
+class GridViewDisplayControllerCollectionViewController: UIViewController {
 
     //MARK: Variables and outlet declaration
     var preloadedMemes: [Meme]?
+    let appDelegate = UIApplication.shared.delegate as! AppDelegate
     
+    @IBOutlet var collectionView: UICollectionView!
     @IBOutlet weak var collectionFlowLayout: UICollectionViewFlowLayout!
     
     //MARK: View Did load and appear functions
@@ -21,7 +23,6 @@ class GridViewDisplayControllerCollectionViewController: UICollectionViewControl
         super.viewDidLoad()
         
         //initializing the memes
-        let appDelegate = UIApplication.shared.delegate as! AppDelegate
         self.preloadedMemes = appDelegate.memes
         
         //adding the (+) button
@@ -39,12 +40,13 @@ class GridViewDisplayControllerCollectionViewController: UICollectionViewControl
     }
 
     override func viewDidAppear(_ animated: Bool) {
-        
-        let appDelegate = UIApplication.shared.delegate as! AppDelegate
         self.preloadedMemes = appDelegate.memes
+        collectionView?.reloadData()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
         self.navigationController?.isNavigationBarHidden = false
         self.tabBarController?.tabBar.isHidden = false
-        collectionView?.reloadData()
     }
     
     //MARK: Set constraints method
@@ -63,34 +65,5 @@ class GridViewDisplayControllerCollectionViewController: UICollectionViewControl
         self.performSegue(withIdentifier: "goToMakeMeme_ViaGrid", sender: self)
     }
 
-    // MARK: UICollectionViewDataSource
-
-    override func numberOfSections(in collectionView: UICollectionView) -> Int {
-        return 1
-    }
-
     
-    
-    override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        
-        return (preloadedMemes?.count)!
-    }
-
-    override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let meme = preloadedMemes![indexPath.row]
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "memeGridViewCell", for: indexPath) as! MemeGridViewCellModalCollectionViewCell
-    
-        // Configure the cell...
-        cell.memeImage.image = meme.memedImage
-        return cell
-    }
-
-    override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let detailViewController = self.storyboard?.instantiateViewController(withIdentifier: "memeDetailViewId") as! MemeDetailViewController
-        detailViewController.meme = self.preloadedMemes?[indexPath.row]
-        navigationController?.pushViewController(detailViewController, animated: true)
-    }
-    
-    
-
 }

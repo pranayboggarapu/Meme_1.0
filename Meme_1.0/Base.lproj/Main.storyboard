@@ -105,6 +105,7 @@
                         <barButtonItem key="backBarButtonItem" title="Back" id="G6t-a4-lyI"/>
                     </navigationItem>
                     <connections>
+                        <outlet property="tableView" destination="caR-uA-wjH" id="wce-VY-5WE"/>
                         <segue destination="BYZ-38-t0r" kind="show" identifier="goToMakeMeme" id="vUe-VG-aSk"/>
                     </connections>
                 </tableViewController>
@@ -179,6 +180,7 @@
                     </navigationItem>
                     <connections>
                         <outlet property="collectionFlowLayout" destination="ybX-Ei-Y1n" id="a75-IB-arF"/>
+                        <outlet property="collectionView" destination="GSw-KY-fie" id="hGN-9c-asj"/>
                         <segue destination="BYZ-38-t0r" kind="show" identifier="goToMakeMeme_ViaGrid" id="22g-Rp-TmT"/>
                     </connections>
                 </collectionViewController>
